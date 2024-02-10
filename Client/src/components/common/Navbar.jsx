@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import ProfileDropDown from "../core/Auth/ProfileDropDown.jsx";
 import { apiConnector } from "../../Services/apiConnector.js";
 import { categories } from "../../Services/apis.js";
+import { ACCOUNT_TYPE } from "../../utils/constants.js";
 
 function Navbar() {
   const { token } = useSelector((state) => state.auth);
@@ -60,32 +61,32 @@ function Navbar() {
                         group-hover:translate-y-[1.65em] group-hover:opacity-100 lg:w-[300px]
                         "
                       >
-                        <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] 
-                        translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"></div>
+                        <div
+                          className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] 
+                        translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"
+                        ></div>
 
-                        {
-                          loading ? (<p className="text-center">Loading....</p>) : 
-                          // loading is false
-                          (
-                            subLinks.length  ?
-                            (<>
-                                {
-                                  subLinks?.map((subLinks, index) => (
-                                    <NavLink to={`/catalog/${subLinks.name
-                                      .split(" ")
-                                      .join("-")
-                                      .toLowerCase()}`}
-                                      className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
-                                      key={index}
-                                      >
-                                    {subLinks.name}
-                                    </NavLink>
-                                  ))
-                                }
-
-                            </>) : (<div>Course Not found</div>)
-                          )
-                        }
+                        {loading ? (
+                          <p className="text-center">Loading....</p>
+                        ) : // loading is false
+                        subLinks.length ? (
+                          <>
+                            {subLinks?.map((subLinks, index) => (
+                              <NavLink
+                                to={`/catalog/${subLinks.name
+                                  .split(" ")
+                                  .join("-")
+                                  .toLowerCase()}`}
+                                className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
+                                key={index}
+                              >
+                                {subLinks.name}
+                              </NavLink>
+                            ))}
+                          </>
+                        ) : (
+                          <div>Course Not found</div>
+                        )}
                       </div>
                     </div>
                   </>
@@ -110,7 +111,7 @@ function Navbar() {
         </nav>
 
         {/* login and signup button */}
-        <div>
+        
           <div className="hidden items-center gap-x-4 md:flex">
             {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
               <Link to="/dashboard/cart" className="relative">
@@ -137,10 +138,10 @@ function Navbar() {
               </Link>
             )}
             {token !== null && <ProfileDropDown />}
-          </div>
-          <button className="mr-4 md:hidden">
+          
+          {/* <button className="mr-4">
             <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

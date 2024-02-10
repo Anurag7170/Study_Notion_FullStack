@@ -15,7 +15,7 @@ exports.signup = async (req, res) => {
       confirmPassword,
       accountType,
       contactNumber,
-      // otp,
+     
     } = req.body;
     // Check if All Details are there or not
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
